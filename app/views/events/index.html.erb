@@ -1,0 +1,18 @@
+<h1>Events</h1>
+
+
+<ul>
+    <% @events.each do |event| %>
+        <li>
+            <h1><%= event.title %></h1>
+            <div><%= event.location %></div>
+        </li>
+    <% end %>
+</ul>
+
+<% if user_signed_in? %>
+    <div> <%= link_to "Log-out", destroy_user_session_path, data: { "turbo-method": :delete }%> </div>
+<% else %>
+    <div><%= link_to "Log-in", new_user_session_path %></div>
+<% end %>
+<div><%= link_to "Create Account", new_user_registration_path %></div>
