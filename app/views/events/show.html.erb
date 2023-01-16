@@ -1,0 +1,37 @@
+<h1> <%= @event.title %> </h1>
+
+<div>
+    <div>
+        <%= @event.location %>
+    </div>
+    <div>
+        <%= @event.description %>
+    </div>
+    <div>
+        <%= @event.date %>
+    </div>
+</div>
+
+<div>
+    <h4>Attendees</h4>
+    <ul>
+        <% @attendees.each do |p| %>
+            <li><%= p.name %></li>
+        <% end %>
+    </ul>
+</div>
+
+<div>
+    <% if user_signed_in? %>
+        <% if @event.attendees.include?(current_user) %>
+            <%= link_to "Leave Event", leave_event_path(@event), method: :delete %>
+        <% else %>
+            <%= link_to "Attend Event", new_event_attendee_path(@event), method: :post %>
+        <% end %>
+    <% end %>
+</div>
+<div>
+    <div>
+        <%= link_to "All Events", root_url %>
+    </div>
+</div>

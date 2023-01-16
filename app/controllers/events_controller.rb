@@ -3,6 +3,11 @@ class EventsController < ApplicationController
         @events = Event.all
     end
 
+    def show
+        @event = Event.find(params[:id])
+        @attendees = @event.attendees
+    end
+
     def new
         @event = current_user.events.new
     end

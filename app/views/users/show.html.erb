@@ -10,7 +10,21 @@
         </div>
     <% end %>
 </div>
+<div>
+    <ul>
+        <h2>Upcoming Events</h2>
+        <% @user.attended_events.where('date >= ?', Date.today).each do |event| %>
+            <li><%= event.title %></li>
+        <% end %>
+    </ul>
 
+    <ul>
+        <h2>Past Events</h2>
+        <% @user.attended_events.where('date < ?', Date.today).each do |event| %>
+            <li><%= event.title %></li>
+        <% end %>
+    </ul>
+</div>
 <div>
     <div>
         <%= link_to "New Event", new_user_event_path(current_user) %>

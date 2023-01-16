@@ -12,20 +12,23 @@ class AttendeesController < ApplicationController
 
   # GET /attendees/new
   def new
-    @attendee = Attendee.new
+    @event = Event.find(params[:event_id])
+    @attendee = @event.attendees.new
   end
 
   # GET /attendees/1/edit
   def edit
   end
 
+
   # POST /attendees or /attendees.json
   def create
-    @attendee = Attendee.new(attendee_params)
-
+    @event = Event.find(params[:event_id])
+    @attendee = @event.attendees.build(attendee_params)
+    @attendee.user_id = current_user.id
     respond_to do |format|
       if @attendee.save
-        format.html { redirect_to attendee_url(@attendee), notice: "Attendee was successfully created." }
+        format.html { redirect_to event_path(@event), notice: "Attendee was successfully created." }
         format.json { render :show, status: :created, location: @attendee }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -65,6 +68,6 @@ class AttendeesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def attendee_params
-      params.require(:attendee).permit(:user_id, :event_id)
+      params.require(:attendee).permit(:name, :event_id)
     end
 end
