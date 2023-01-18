@@ -23,8 +23,8 @@
 
 <div>
     <% if user_signed_in? %>
-        <% if @event.attendees.include?(current_user) %>
-            <%= link_to "Leave Event", leave_event_path(@event), method: :delete %>
+        <% if @attendee %>
+            <%= link_to "Leave Event", cancel_rsvp_event_path(@attendee)%>
         <% else %>
             <%= link_to "Attend Event", new_event_attendee_path(@event), method: :post %>
         <% end %>

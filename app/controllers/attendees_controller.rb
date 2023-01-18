@@ -52,10 +52,11 @@ class AttendeesController < ApplicationController
 
   # DELETE /attendees/1 or /attendees/1.json
   def destroy
+    @attendee = Attendee.find(params[:user_id])
     @attendee.destroy
 
     respond_to do |format|
-      format.html { redirect_to attendees_url, notice: "Attendee was successfully destroyed." }
+      format.html { redirect_to root_path, notice: "Attendee was successfully destroyed." }
       format.json { head :no_content }
     end
   end

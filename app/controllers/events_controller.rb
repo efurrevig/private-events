@@ -6,6 +6,7 @@ class EventsController < ApplicationController
     def show
         @event = Event.find(params[:id])
         @attendees = @event.attendees
+        @attendee = current_attendee?(@event)
     end
 
     def new
@@ -21,8 +22,23 @@ class EventsController < ApplicationController
         end
     end
 
+    def cancel_rsvp
+        @attendee = Attendee.find(params[:id])
+        @event = Event.find(@attendee.event_id)
+        @attendee.destroy
+        redirect_to event_path(@event)
+    end
+
     private
         def event_params
             params.require(:event).permit(:title, :location, :description, :date)
+        end
+
+        def current_attendee?(event)
+            if event.user_attendees.exists?(current_user.id)
+                event.attendees.find_by(user_id: current_user.id)
+            else
+                nil
+            end
         end
 end
