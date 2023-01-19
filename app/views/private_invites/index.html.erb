@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Private invites</h1>
+
+<div id="private_invites">
+  <% @private_invites.each do |private_invite| %>
+    <%= render private_invite %>
+    <p>
+      <%= link_to "Show this private invite", private_invite %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New private invite", new_private_invite_path %>

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :private_invites
 
   root 'events#index'
 

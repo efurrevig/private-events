@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_15_203208) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_18_235316) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -32,6 +32,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_15_203208) do
     t.text "description"
     t.string "title"
     t.integer "owner_id"
+    t.boolean "private", default: false
+  end
+
+  create_table "private_invites", force: :cascade do |t|
+    t.bigint "event_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_private_invites_on_event_id"
+    t.index ["user_id"], name: "index_private_invites_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -48,4 +58,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_15_203208) do
 
   add_foreign_key "attendees", "events"
   add_foreign_key "attendees", "users"
+  add_foreign_key "private_invites", "events"
+  add_foreign_key "private_invites", "users"
 end

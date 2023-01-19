@@ -1,6 +1,7 @@
 class EventsController < ApplicationController
     def index
-        @events = Event.all
+        @events = Event.where(private: false)
+        @private_events = Event.where(private: true)
     end
 
     def show
@@ -31,7 +32,7 @@ class EventsController < ApplicationController
 
     private
         def event_params
-            params.require(:event).permit(:title, :location, :description, :date)
+            params.require(:event).permit(:title, :location, :description, :date, :private)
         end
 
         def current_attendee?(event)
