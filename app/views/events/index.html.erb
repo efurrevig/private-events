@@ -2,7 +2,7 @@
 
 
 <ul>
-    <div>Public Events:</div>
+    <div><h3>Public Events:</h3></div>
     <% @events.each do |event| %>
         <li>
             <h1><%= link_to event.title, event_path(event) %></h1>
@@ -11,10 +11,10 @@
     <% end %>
 </ul>
 
-<% if user_signed_in? %>
+<% if user_signed_in? && !@private_events.empty? %>
     <ul>
-        <div>Private Events:</div>
-        <% @private_events.where('user_id = ?', current_user.id).each do |event| %>
+        <div><h3>Private Events:</h3></div>
+        <% @private_events.each do |event| %>
             <li>
                 <h1><%= link_to event.title, event_path(event) %></h1>
                 <div><%= event.location %></div>

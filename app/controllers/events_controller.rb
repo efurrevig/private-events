@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
     def index
         @events = Event.where(private: false)
-        @private_events = Event.where(private: true)
+        @private_events = current_user.invited_events if current_user
     end
 
     def show
@@ -42,4 +42,5 @@ class EventsController < ApplicationController
                 nil
             end
         end
+
 end

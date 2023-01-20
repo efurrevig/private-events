@@ -13,7 +13,7 @@ class PrivateInvitesController < ApplicationController
   # GET /private_invites/new
   def new
     @event = Event.find(params[:event_id])
-    @private_invite = @event.private_invites.new
+    @private_invite = @event.private_invites.build
   end
 
   # GET /private_invites/1/edit
@@ -23,12 +23,12 @@ class PrivateInvitesController < ApplicationController
   # POST /private_invites or /private_invites.json
   def create
     @event = Event.find(params[:event_id])
-    @invitee = User.find(params[:user_id])
-    @private_invite = @event.private_invites.build
-    @private_invite.user_id = @invitee.id
+    @private_invite = @event.private_invites.build(private_invite_params)
+    @user = User.find_by(email: @private_invite.email)
+    @private_invite.user_id = @user.id
 
     respond_to do |format|
-      if @private_invite.save
+      if @private_invite.save!
         format.html { redirect_to private_invite_url(@private_invite), notice: "Private invite was successfully created." }
         format.json { render :show, status: :created, location: @private_invite }
       else
@@ -69,6 +69,6 @@ class PrivateInvitesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def private_invite_params
-      params.fetch(:private_invite, {})
+      params.require(:private_invite).permit(:event_id, :user_id, :email)
     end
 end

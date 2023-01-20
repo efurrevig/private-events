@@ -7,6 +7,7 @@
             <div><%= event.location %></div>
             <div><%= event.description %>
             <div><%= event.date %>
+            <div><%= link_to "Invite User", new_event_private_invite_path(event)%>
         </div>
     <% end %>
 </div>
@@ -15,7 +16,6 @@
         <h2>Upcoming Events</h2>
         <% @user.attended_events.where('date >= ?', Date.today).each do |event| %>
             <li><%= event.title %></li>
-            <li><%= event.id %>
             <div>
                 <%= link_to "Leave Event", user_event_path(event), method: :show %> 
             </div>

@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :users do
     resources :events
     resources :attendees
+    resources :private_invites
   end
 
   resources :events do
@@ -14,6 +15,7 @@ Rails.application.routes.draw do
       get 'cancel_rsvp'
     end
     resources :attendees
+    resources :private_invites
   end
 
 
